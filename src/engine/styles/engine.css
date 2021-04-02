@@ -1,0 +1,54 @@
+body {
+  overflow: hidden;
+}
+
+#root .App {
+  height: 100vh;
+  width: 100vw;
+}
+
+.engine {
+  position: absolute;
+  height: inherit;
+  width: inherit;
+}
+
+.engine__gui {
+  position: absolute;
+  z-index: 3000;
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+}
+
+.engine__map {
+  background-image: url(../../assets/ground-texture.jpg);
+  position: relative;
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
+}
+
+.engine__map__area {
+  position: relative;
+  border: 80px solid orange;
+  background-image: url(../../assets/ground.jpg);
+  -o-border-image: url(../../assets/borders.png) 700 repeat;
+     border-image: url(../../assets/borders.png) 700 repeat;
+}
+
+.engine__object {
+  position: relative;
+  background-color: #fff;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -webkit-transition-duration: 0.1s;
+          transition-duration: 0.1s;
+  z-index: 100;
+}
+
+.engine__object__static {
+  position: fixed;
+  background-color: red;
+}
+/*# sourceMappingURL=engine.css.map */
