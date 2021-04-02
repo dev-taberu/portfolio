@@ -41,7 +41,7 @@ export default () => {
         <div className='engine__gui'>
             <EngineObject pos={{x: 100, y: 100}} content={(
                 <div>
-                    this is text 
+                    this is GUI text 
                 </div>
             )} />
         </div>

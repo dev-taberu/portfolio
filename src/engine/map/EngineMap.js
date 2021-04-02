@@ -8,8 +8,9 @@ export default ({width, height}) => {
 
     const speed = 10;
 
-    const [offset, setOffset] = useState({top: -(height - document.documentElement.clientHeight)/2,  left: -( width - document.documentElement.clientWidth)/2});
-    const [playerPos, setPlayerPos] = useState({x: 3900, y: 2350});
+    const [offset, setOffset] = useState({top: 0, y: 0});//useState({top: -(height - document.documentElement.clientHeight)/2,  left: -( width - document.documentElement.clientWidth)/2});
+    const [playerPos, setPlayerPos] = useState({x: 390, y: 235});
+    const [show, setShow] = useState(false);
     const keysDownState = {up: false, down: false, right: false, left: false};
 
 
@@ -53,52 +54,17 @@ export default ({width, height}) => {
         }
     }
 
-    const mapMoveUp = () => {
-        if(offset.top + speed <= 0 && ((height - playerPos.y) > document.documentElement.clientHeight /2 ))
-            return (offset.top + speed);
-        
-        return offset.top;
+    const mapMove =() => {
+        let {toX, toY} = {toX: window.scrollX, toY: window.scrollY};
+        if(keysDownState.left || keysDownState.right)
+            toX = playerPos.x - (document.documentElement.clientWidth / 2);
+        if(keysDownState.up || keysDownState.down)
+            toY = playerPos.y - (document.documentElement.clientHeight / 2);
+
+        window.scrollTo(toX, toY);
     }
 
-    const mapMoveDown = () => {
-        if((document.documentElement.clientHeight - height - offset.top + speed) <= 0 && (playerPos.y > (document.documentElement.clientHeight / 2)))
-            return (offset.top - speed);
-        return offset.top;
-    }
-
-    const mapMoveLeft = () => {
-
-        if(offset.left + speed <= 0 && ((width - playerPos.x) > document.documentElement.clientWidth /2 ))
-            return (offset.left + speed);
-        else
-            return offset.left;
-    }
- 
-    const mapMoveRight = () => {
-        if((document.documentElement.clientWidth - width - offset.left + speed) <= 0 && (playerPos.x > document.documentElement.clientWidth /2 ))
-            return (offset.left - speed);
-        return offset.left;
-    }
-
-    const mapMove = async () => {
-        let {top, left} = offset;
-        if(keysDownState.left)
-            left = mapMoveLeft();
-        if(keysDownState.right)
-            left = mapMoveRight();
-        if(keysDownState.up)
-            top = mapMoveUp();
-        if(keysDownState.down)
-            top = mapMoveDown();
-
-        if(offset.top !== top || offset.left !== left) {
-            offset.top = top;
-            offset.left = left;
-            setOffset(offset);
-        }
-    }
-
-    const checkMovementPlayerLoop = async () => {
+    const checkMovementPlayerLoop = () => {
 
         let {x, y} = playerPos;
         if(keysDownState.left)
@@ -111,9 +77,9 @@ export default ({width, height}) => {
             y += 10
 
         if(playerPos.x !== x || playerPos.y !== y) {
-            playerPos.x = x;
-            playerPos.y = y;
-            await mapMove();
+            playerPos.x = (x < 0)?0:(x > (width - 200))?(width - 200):x;
+            playerPos.y = (y < 0)?0:(y > (height - 200))?(height - 200):y;
+            mapMove();
             setPlayerPos({x: x, y: y});
         }
 
@@ -130,8 +96,8 @@ export default ({width, height}) => {
     return(
         <div className='engine__map' style={{width: width, height: height, top: offset.top, left: offset.left}}>
             <EngineObject texture={{path: playerPng, height: 100, width: 120, transform: ''}} pos={{x: playerPos.x, y: playerPos.y}} />
-            <EngineMapArea playerPos={playerPos} pos={{x: 3700, y: 2200}} height={500} width={500} onPlayerInside={() => {console.log('YEAG')}}>
-                <EngineObject texture={{path: groundLine, height: 100, width: 100}} pos={{x: 1, y: 1}}/>
+            <EngineMapArea onPlayerEnter={() => setShow(true)} onPlayerLeave={() => setShow(false)} playerPos={playerPos} pos={{x: 370, y: 220}} height={500} width={500} >
+                <EngineObject visibility={(show)?'visible':'hidden'} texture={{path: groundLine, height: 100, width: 100}} pos={{x: 1, y: 1}}/>
             </EngineMapArea>
         </div>
     )

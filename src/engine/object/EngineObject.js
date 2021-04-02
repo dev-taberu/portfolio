@@ -1,4 +1,4 @@
-export default ({pos, texture, content}) => {
+export default ({pos, texture, content, visibility}) => {
 
     const renderTexture = () => {
         if(texture !== undefined) {
@@ -13,7 +13,7 @@ export default ({pos, texture, content}) => {
     }
 
     return(
-        <div className='engine__object' style={{top: pos.y, left: pos.x}}>
+        <div className='engine__object' style={{top: pos.y, left: pos.x, visibility:(visibility !== undefined)?visibility:'visible'}}>
             {renderTexture()}
             {renderContent()}
         </div>

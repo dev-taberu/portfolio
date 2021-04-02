@@ -16,7 +16,7 @@ body {
     width: inherit;
 
     &__gui {
-        position: absolute;
+        position: fixed;
         z-index: 3000;
         height: 100vh;
         width: 100vw;
@@ -30,7 +30,7 @@ body {
 
         &__area {
             position: relative;
-            border: 80px solid orange;
+            border: 50px solid orange;
             background-image: url(../../assets/ground.jpg);
             border-image: url(../../assets/borders.png) 700 repeat;
         }
@@ -40,7 +40,6 @@ body {
         position: relative;
         background-color: #fff;
         width: fit-content;
-        transition-duration: 0.1s;
         z-index: 100;
 
         &__static {

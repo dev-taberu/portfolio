@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export default ({width, height, pos, children, playerPos, onPlayerInside}) => {
+export default ({width, height, pos, children, playerPos, onPlayerEnter, onPlayerLeave}) => {
+
+
+    const [playerInside, setPlayerInside] = useState(false);
 
     const isPlayerInside = () => {
         if(playerPos !== undefined) {
@@ -9,13 +12,20 @@ export default ({width, height, pos, children, playerPos, onPlayerInside}) => {
         return false;
     }
 
-    const doPlayerInside = () => {
-        if(isPlayerInside() && onPlayerInside !== undefined)
-            onPlayerInside();
-    }
-
     useEffect(() => {
-        doPlayerInside();
+        if(isPlayerInside() === playerInside) {
+            return;
+        } else {
+            let playerInsideState = !playerInside;
+            setPlayerInside(playerInsideState);
+            if(playerInsideState) {
+                if(onPlayerEnter !== undefined)
+                    onPlayerEnter();
+            } else {
+                if(onPlayerLeave !== undefined)
+                    onPlayerLeave();
+            }
+        }
     }, [playerPos])
 
     return (
