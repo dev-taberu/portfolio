@@ -6,7 +6,7 @@ export default () => {
     return(
         <div className='engine'>
             <EngineGui />
-            <EngineMap onKeyDown={(e) => alert(e)} height={2000} width={3000}/>
+            <EngineMap height={2000} width={3000}/>
         </div>
     )
 }

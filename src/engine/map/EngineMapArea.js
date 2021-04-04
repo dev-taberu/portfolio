@@ -12,7 +12,7 @@ export default ({width, height, pos, children, playerPos, onPlayerEnter, onPlaye
         return false;
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         if(isPlayerInside() === playerInside) {
             return;
         } else {
@@ -26,7 +26,7 @@ export default ({width, height, pos, children, playerPos, onPlayerEnter, onPlaye
                     onPlayerLeave();
             }
         }
-    }, [playerPos])
+    }, [playerPos])*/
 
     return (
         <div className='engine__map__area' style={{top: pos.y, left: pos.x, width: width, height: height}}>

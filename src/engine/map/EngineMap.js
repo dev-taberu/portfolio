@@ -54,7 +54,7 @@ export default ({width, height}) => {
         }
     }
 
-    const mapMove =() => {
+    const camMove = () => {
         let {toX, toY} = {toX: window.scrollX, toY: window.scrollY};
         if(keysDownState.left || keysDownState.right)
             toX = playerPos.x - (document.documentElement.clientWidth / 2);
@@ -68,18 +68,18 @@ export default ({width, height}) => {
 
         let {x, y} = playerPos;
         if(keysDownState.left)
-            x -= 10;
+            x -= speed;
         if(keysDownState.right)
-            x += 10
+            x += speed;
         if(keysDownState.up)
-            y -= 10
+            y -= speed;
         if(keysDownState.down)
-            y += 10
+            y += speed;
 
         if(playerPos.x !== x || playerPos.y !== y) {
             playerPos.x = (x < 0)?0:(x > (width - 200))?(width - 200):x;
             playerPos.y = (y < 0)?0:(y > (height - 200))?(height - 200):y;
-            mapMove();
+            camMove();
             setPlayerPos({x: x, y: y});
         }
 
@@ -96,8 +96,8 @@ export default ({width, height}) => {
     return(
         <div className='engine__map' style={{width: width, height: height, top: offset.top, left: offset.left}}>
             <EngineObject texture={{path: playerPng, height: 100, width: 120, transform: ''}} pos={{x: playerPos.x, y: playerPos.y}} />
-            <EngineMapArea onPlayerEnter={() => setShow(true)} onPlayerLeave={() => setShow(false)} playerPos={playerPos} pos={{x: 370, y: 220}} height={500} width={500} >
-                <EngineObject visibility={(show)?'visible':'hidden'} texture={{path: groundLine, height: 100, width: 100}} pos={{x: 1, y: 1}}/>
+            <EngineMapArea onPlayerEnter={() => setShow(true)} onPlayerLeave={() => setShow(false)} playerPos={playerPos} pos={{x: 370, y: 220}} height={150} width={150} >
+                <EngineObject texture={{path: groundLine, height: 100, width: 100}} pos={{x: 1, y: 1}}/>
             </EngineMapArea>
         </div>
     )
